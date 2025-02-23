@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifelogger Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Lifelogger</h1>
+        <nav>
+            <button onclick="window.location.href='/text'">New Journal</button>
+            <button onclick="summarizeJournals()">Summarize</button>
+        </nav>
+    </header>
+    <main>
+        <h2>Your Journals</h2>
+        <ul id="journal-list"></ul>
+    </main>
+    <script src="static/main.js"></script>
+</body>
+</html>
