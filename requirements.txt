@@ -13,4 +13,3 @@ httpx
 pytest-asyncio
 aiofiles
 jinja2
-gorq
