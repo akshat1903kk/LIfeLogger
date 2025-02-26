@@ -37,6 +37,7 @@ async def create_journal(user: user_dependency, journal_request: JournalBody, db
 
 @router.delete("/{id}")
 def delete_journal(id: int, db:db_dependency, user: user_dependency):
+    
     journal_entry = db.query(Journal).filter(Journal.id == id, Journal.user_id == user.get('id')).one_or_none()
     
     if not journal_entry:

@@ -40,6 +40,3 @@ async def register(request: Request):
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get("/text", response_class=HTMLResponse)
-async def text(request: Request):
-    return templates.TemplateResponse("text.html", {"request": request})

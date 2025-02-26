@@ -21,7 +21,7 @@ def get_summary(n):
         # Generate summary using LLM
         completion = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
-            messages=[{"role": "user", "content": f"Create a summary of this note: {note} and give keypoints on top" }],
+            messages=[{"role": "user", "content": f"Create a summary of this note: {note}" }],
             temperature=1,
             max_completion_tokens=1024,
             top_p=1,
