@@ -65,7 +65,10 @@
                         const li = document.createElement("li");
                         li.className = "nav-item";
                         li.innerHTML = `<a class="nav-link" href="#" data-id="${journal.id}">${journal.description.substring(0, 20)}...</a>`;
-                        li.addEventListener("click", () => loadJournal(journal.id));
+                        li.addEventListener("click", (event) => {
+                            event.preventDefault();
+                            loadJournal(journal.id);
+                        });
                         journalList.appendChild(li);
                     });
                 } catch (error) {
@@ -75,12 +78,26 @@
 
             async function loadJournal(id) {
                 try {
-                    const response = await apiFetch(`/journal/${id}`);
-                    if (!response.ok) throw new Error("Failed to load journal entry");
+                    console.log(`Fetching journal with ID: ${id}`);
+                    if (!id) {
+                        console.error("Invalid journal ID:", id);
+                        alert("Invalid journal ID. Please try again.");
+                        return;
+                    }
+                    const response = await apiFetch(`/journal/${id}`, { method: "GET" });
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            alert("Journal not found.");
+                        } else {
+                            throw new Error(`Failed to load journal entry. Status: ${response.status}`);
+                        }
+                        return;
+                    }
                     const journal = await response.json();
                     mainContent.innerHTML = `<h1>Journal Entry</h1><p>${journal.description}</p>`;
                 } catch (error) {
-                    alert(error.message);
+                    console.error("Error fetching journal:", error);
+                    alert("Failed to fetch journal. Please try again.");
                 }
             }
 
@@ -101,7 +118,6 @@
                     <textarea id="journal-text" class="form-control"></textarea>
                     <button class="btn btn-success mt-2" id="save-journal-btn">Save</button>
                 `;
-
                 document.getElementById("save-journal-btn").addEventListener("click", async () => {
                     try {
                         const text = document.getElementById("journal-text").value;
